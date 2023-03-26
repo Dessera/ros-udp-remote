@@ -1,5 +1,5 @@
 {
-  "name": "udp_eprobot_control",
+  "name": "udp_sender",
   "private": true,
   "version": "0.0.0",
   "type": "module",

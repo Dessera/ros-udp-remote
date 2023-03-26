@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "udp_eprobot_control",
+    "productName": "udp_sender",
     "version": "0.0.0"
   },
   "tauri": {
@@ -39,7 +39,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "title": "udp_eprobot_control",
+        "title": "udp_sender",
         "width": 600,
         "height": 600,
         "resizable": false
