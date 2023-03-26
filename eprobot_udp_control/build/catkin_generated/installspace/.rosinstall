@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /root/eprobot_udp_control/install/setup.sh

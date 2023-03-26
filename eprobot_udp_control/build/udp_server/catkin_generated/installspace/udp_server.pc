@@ -1,0 +1,8 @@
+prefix=/root/eprobot_udp_control/install
+
+Name: udp_server
+Description: Description of udp_server
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

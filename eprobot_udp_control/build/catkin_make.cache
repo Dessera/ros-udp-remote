@@ -1,0 +1,2 @@
+udp_server
+-DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_DEVEL_PREFIX=/root/eprobot_udp_control/devel -DCMAKE_INSTALL_PREFIX=/root/eprobot_udp_control/install -G Unix Makefiles
