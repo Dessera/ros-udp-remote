@@ -1,3 +1,4 @@
+#pragma once
 #include <geometry_msgs/Twist.h>
 
 class TwistGenerate {

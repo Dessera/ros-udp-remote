@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 
 /*
@@ -27,4 +28,7 @@ class UdpInput {
  private:
   class UdpInputImpl;
   std::unique_ptr<UdpInputImpl> impl_;
+
+ public:
+  static UdpInput* create(int argc, char** argv);
 };

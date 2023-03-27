@@ -3,8 +3,6 @@
 #include <ros/ros.h>
 
 #include <boost/asio.hpp>
-#include <boost/asio/io_context.hpp>
-#include <boost/asio/ip/udp.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/system/error_code.hpp>
 #include <cstdint>
@@ -29,7 +27,6 @@ using boost::asio::ip::udp;
 
 class UdpInput::UdpInputImpl {
  public:
-
   // TODO: Add error handling
   /**
    * @brief Construct a new Udp Input Impl object
@@ -43,9 +40,14 @@ class UdpInput::UdpInputImpl {
             context_,
             udp::endpoint(boost::asio::ip::address::from_string(ip_), port_)) {
     ROS_INFO("UDP_SERVER STARTED ON %s:%d", ip_, port_);
-    pub_ = nh_private_.advertise<geometry_msgs::Twist>("/turtle1/cmd_vel", 5);
+    pub_ = nh_private_.advertise<geometry_msgs::Twist>("/turtle1/cmd_vel", 1);
   }
 
+  /**
+   * @brief Run the udp server
+   *        This function will receive data from udp client, parse data like {
+   * x:1, z:1 } and publish data to /cmd_vel topic
+   */
   void run() {
     ros::Rate rate(UDP_RATE);
 
@@ -61,7 +63,6 @@ class UdpInput::UdpInputImpl {
       }
 
       // Parse data
-      ROS_INFO("RECEIVED: %s", data_);
       TwistGenerate twist_gen{max_linear_x_, max_angular_z_, data_};
       if (twist_gen.error()) {
         ROS_ERROR("ERROR WHILE PARSING DATA");
@@ -101,7 +102,7 @@ class UdpInput::UdpInputImpl {
   double max_linear_x_{MAX_LINEAR_X};
   double max_angular_z_{MAX_ANGULAR_Z};
 
-  boost::asio::io_context context_{};
+  boost::asio::io_context context_;
   udp::socket socket_;
   boost::system::error_code error;
   char data_[UDP_DEFAULT_BUFSIZE]{};
@@ -112,3 +113,8 @@ void UdpInput::run() { impl_->run(); }
 UdpInput::UdpInput(int argc, char** argv)
     : impl_(new UdpInputImpl(argc, argv)) {}
 UdpInput::~UdpInput() = default;
+
+UdpInput* UdpInput::create(int argc, char** argv) {
+  ros::init(argc, argv, "udp_input");
+  return new UdpInput(argc, argv);
+}

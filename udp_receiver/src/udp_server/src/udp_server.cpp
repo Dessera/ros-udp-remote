@@ -7,10 +7,9 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  ros::init(argc, argv, "udp_input");
+  UdpInput* udp_input = UdpInput::create(argc, argv);
+  udp_input->run();
 
-  UdpInput udp_input(argc, argv);
-  udp_input.run();
-
+  delete udp_input;
   return 0;
 }
